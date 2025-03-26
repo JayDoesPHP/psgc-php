@@ -1,0 +1,22 @@
+{
+	"name": "jaydoesphp/psgc-php",
+	"description": "A PHP package for retrieving and managing Philippine Standard Geographic Code (PSGC) data, including regions, provinces, cities, and barangays.",
+	"type": "library",
+	"autoload": {
+		"psr-4": {
+			"Jaydoesphp\\PSGCphp\\": "src/"
+		}
+	},
+	"authors": [
+		{
+			"name": "Ar Jay Marigondon",
+			"email": "amarigondon@forbescollege.org"
+		}
+	],
+	"require": {
+		"cakephp/utility": "^5.1"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^11.5"
+	}
+}
