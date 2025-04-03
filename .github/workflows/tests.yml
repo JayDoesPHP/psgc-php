@@ -5,6 +5,9 @@ on: [push, pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-version: ['8.1', '8.2']  # Runs tests on both versions
 
     steps:
       - name: Checkout repository
@@ -13,7 +16,7 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1' 
+          php-version: ${{ matrix.php-version }}
 
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
