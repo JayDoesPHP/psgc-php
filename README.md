@@ -1,3 +1,4 @@
+![Thumbnail](https://github.com/user-attachments/assets/47d5357d-5681-4dab-8684-e39a0885a06f)
 # PSGC-PHP
 
 PSGC-PHP is a PHP package designed to handle Philippine Standard Geographic Code
@@ -49,7 +50,8 @@ composer require jaydoesphp/psgc-php
 ### Loading PSGC Data
 
 ```php
-use PSGC\PSGC;
+// …
+use Jaydoesphp\PSGCphp\PSGC;
 
 $provinces = PSGC::getProvinces();
 print_r($provinces);
@@ -58,7 +60,8 @@ print_r($provinces);
 ### Searching by Code
 
 ```php
-use PSGC\PSGC;
+// …
+use Jaydoesphp\PSGCphp\PSGC;
 
 $province = PSGC::searchProvinceByCode('0102800000');
 print_r($province);
