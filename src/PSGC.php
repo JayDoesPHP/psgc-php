@@ -2,9 +2,8 @@
 
 namespace Jaydoesphp\PSGCphp;
 
+use Jaydoesphp\PSGCphp\helper\SearchAddressByCode;
 use Jaydoesphp\PSGCphp\helper\GetFileContentHelper;
-use Jaydoesphp\PSGCphp\helper\GetAllAddressByCode;
-use Jaydoesphp\PSGCphp\helper\GetAddressByCode;
 use Jaydoesphp\PSGCphp\enums\AddressType;
 use Cake\Utility\Inflector;
 
@@ -23,10 +22,10 @@ use Cake\Utility\Inflector;
  * @method static array getAllBarangaysByCityCode(string $city_code) Get All barangays by city_code
  *
  * [Get Address By Code]
- * @method static array getRegionsByCode(string $region_code) Get region by code
- * @method static array getProvincesByCode(string $province_code) Get province by code
- * @method static array getCitiesByCode(string $city_code) Get city by code
- * @method static array getBarangaysByCode(string $barangay_code) Get barangay by code
+ * @method static array getRegionsByCode(string $region_code) Get region by its code
+ * @method static array getProvincesByCode(string $province_code) Get province by its code
+ * @method static array getCitiesByCode(string $city_code) Get city by its code
+ * @method static array getBarangaysByCode(string $barangay_code) Get barangay by its code
  */
 
 final class PSGC
@@ -57,7 +56,7 @@ final class PSGC
 
             $addresses = GetFileContentHelper::content("{$type[0]}.json");
 
-            return GetAllAddressByCode::search($addresses, $arguments[0], AddressType::from($type[1])) ?? null;
+            return SearchAddressByCode::search($addresses, $arguments[0], AddressType::from($type[1])) ?? null;
         }
 
         // Check if the method name matches the pattern for getting address by Code
@@ -67,7 +66,7 @@ final class PSGC
 
             $addresses = GetFileContentHelper::content("{$type}.json");
 
-            return GetAddressByCode::search($addresses, $arguments[0], AddressType::from($type))[0] ?? null;
+            return SearchAddressByCode::search($addresses, $arguments[0], AddressType::from($type))[0] ?? null;
         }
 
         return throw new \BadMethodCallException("Method {$name} does not exist.");
