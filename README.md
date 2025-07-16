@@ -39,7 +39,7 @@ These methods retrieve **multiple records** based on a parent ID.
 
 | Address Type      | Method                                         | Description                                               |
 | ----------------- | ---------------------------------------------- | --------------------------------------------------------- |
-| Province          | `getAllProvincesById($region_id)`              | Retrieves all provinces under a specific region.          |
+| Province          | `getAllProvincesByCode($region_id)`            | Retrieves all provinces under a specific region.          |
 | City/Municipality | `getAllCitiesMunicipalitiesById($province_id)` | Retrieves all cities and municipalities under a province. |
 | Municipality      | `getAllMunicipalitiesById($province_id)`       | Retrieves all municipalities under a province.            |
 | City              | `getAllCitiesById($province_id)`               | Retrieves all cities under a province.                    |
@@ -76,7 +76,7 @@ print_r($provinces);
 ```php
 use Jaydoesphp\PSGCphp\PSGC;
 
-$provinces = PSGC::getAllProvincesById('1');
+$provinces = PSGC::getAllProvincesByCode('1');
 print_r($provinces);
 ```
 
