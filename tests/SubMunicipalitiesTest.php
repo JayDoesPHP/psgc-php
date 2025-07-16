@@ -13,10 +13,19 @@ final class SubMunicipalitiesTest extends TestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testSearchSubMunicipalityByCode()
+    public function testGetAllSubMunicipalitiesById()
     {
-        $subMunicipalityCode = '1380601000';
-        $result = PSGC::searchSubMunicipalityByCode($subMunicipalityCode);
+        $province_id = '65';
+        $result = PSGC::getAllSubMunicipalitiesById($province_id);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+    }
+
+    public function testGetSubMunicipalityById()
+    {
+        $sub_municipality_id = '1350';
+        $result = PSGC::getSubMunicipalityById($sub_municipality_id);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);

@@ -13,10 +13,10 @@ final class RegionsTest extends TestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testSearchRegionByCode()
+    public function testGetRegionById()
     {
-        $regionCode = '0100000000';
-        $result = PSGC::searchRegionByCode($regionCode);
+        $region_id = '1';
+        $result = PSGC::getRegionById($region_id);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);

@@ -1,81 +1,103 @@
-![Thumbnail](https://github.com/user-attachments/assets/47d5357d-5681-4dab-8684-e39a0885a06f)
 # PSGC-PHP
 
 PSGC-PHP is a PHP package designed to handle Philippine Standard Geographic Code
-(PSGC) data. It provides utilities for searching and retrieving geographic
-information such as regions, provinces, cities, municipalities,
-sub-municipalities, and barangays from JSON datasets.
+(PSGC) data.  
+It provides utilities for searching and retrieving geographic information such
+as regions, provinces, cities, municipalities, sub-municipalities, and barangays
+from JSON datasets.
 
 ## Features
 
 - Retrieve Philippine geographic data from JSON files.
-- Search addresses by PSGC code.
-- Helper functions for handling content retrieval.
-- Unit tests for each geographic level.
+- Search address information by PSGC code.
+- Helper classes for content and lookup handling.
+- Unit tests included for each geographic level.
 
 ## Installation
 
-To install PSGC-PHP, use Composer:
+Install via Composer:
 
 ```sh
 composer require jaydoesphp/psgc-php
 ```
 
-## Get Methods
+## Get All Methods
 
-| Address Type          | Method Name                 | Description                                                          |
-| --------------------- | --------------------------- | -------------------------------------------------------------------- |
-| **Region**            | `getRegions()`              | Retrieves all regions in the Philippines.                            |
-| **Province**          | `getProvinces()`            | Retrieves all provinces within a specified region.                   |
-| **City/Municipality** | `getCitiesMunicipalities()` | Retrieves all cities and municipalities within a specified province. |
-| **Municipality**      | `getMunicipalities()`       | Retrieves all municipalities within a province.                      |
-| **City**              | `getCities()`               | Retrieves all cities within a province.                              |
-| **Sub-Municipality**  | `getSubMunicipalities()`    | Retrieves all sub-municipalities.                                    |
-| **Barangay**          | `getBarangays()`            | Retrieves all barangays within a city or municipality.               |
+| Address Type      | Method                      | Description                              |
+| ----------------- | --------------------------- | ---------------------------------------- |
+| Region            | `getRegions()`              | Retrieves all regions.                   |
+| Province          | `getProvinces()`            | Retrieves all provinces.                 |
+| City/Municipality | `getCitiesMunicipalities()` | Retrieves all cities and municipalities. |
+| Municipality      | `getMunicipalities()`       | Retrieves all municipalities.            |
+| City              | `getCities()`               | Retrieves all cities.                    |
+| Sub-Municipality  | `getSubMunicipalities()`    | Retrieves all sub-municipalities.        |
+| Barangay          | `getBarangays()`            | Retrieves all barangays.                 |
 
-## Search Methods
+## Get All By ID Methods
 
-| Search Type           | Method Name                             | Description                                    |
-| --------------------- | --------------------------------------- | ---------------------------------------------- |
-| **Region**            | `searchRegionByCode($code)`             | Finds a region using its PSGC code.            |
-| **Province**          | `searchProvinceByCode($code)`           | Finds a province using its PSGC code.          |
-| **City/Municipality** | `searchCitiesMunicipalityByCode($code)` | Finds a city/municipality using its PSGC code. |
-| **Municipality**      | `searchMunicipalityByCode($code)`       | Finds a municipality using its PSGC code.      |
-| **City**              | `searchCityByCode($code)`               | Finds a city using its PSGC code.              |
-| **Sub-Municipality**  | `searchSubMunicipalityByCode($code)`    | Finds a sub-municipality using its PSGC code.  |
-| **Barangay**          | `searchBarangayByCode($code)`           | Finds a barangay using its PSGC code.          |
+These methods retrieve **multiple records** based on a parent ID.
+
+| Address Type      | Method                                         | Description                                               |
+| ----------------- | ---------------------------------------------- | --------------------------------------------------------- |
+| Province          | `getAllProvincesById($region_id)`              | Retrieves all provinces under a specific region.          |
+| City/Municipality | `getAllCitiesMunicipalitiesById($province_id)` | Retrieves all cities and municipalities under a province. |
+| Municipality      | `getAllMunicipalitiesById($province_id)`       | Retrieves all municipalities under a province.            |
+| City              | `getAllCitiesById($province_id)`               | Retrieves all cities under a province.                    |
+| Sub-Municipality  | `getAllSubMunicipalitiesById($province_id)`    | Retrieves all sub-municipalities under a province.        |
+| Barangay          | `getAllBarangaysById($city_municipality_id)`   | Retrieves all barangays under a city/municipality.        |
+
+## Get By ID Methods
+
+These methods retrieve **a single record** using its PSGC ID.
+
+| Address Type      | Method                           | Description                        |
+| ----------------- | -------------------------------- | ---------------------------------- |
+| Region            | `getRegionById($id)`             | Gets a region by ID.               |
+| Province          | `getProvinceById($id)`           | Gets a province by ID.             |
+| City/Municipality | `getCitiesMunicipalityById($id)` | Gets a city or municipality by ID. |
+| Municipality      | `getMunicipalityById($id)`       | Gets a municipality by ID.         |
+| City              | `getCityById($id)`               | Gets a city by ID.                 |
+| Sub-Municipality  | `getSubMunicipalityById($id)`    | Gets a sub-municipality by ID.     |
+| Barangay          | `getBarangayById($id)`           | Gets a barangay by ID.             |
 
 ## Usage
 
-### Loading PSGC Data
+### Get All Addresses
 
 ```php
-// …
 use Jaydoesphp\PSGCphp\PSGC;
 
 $provinces = PSGC::getProvinces();
 print_r($provinces);
 ```
 
-### Searching by Code
+### Get All Provinces by Region ID
 
 ```php
-// …
 use Jaydoesphp\PSGCphp\PSGC;
 
-$province = PSGC::searchProvinceByCode('0102800000');
+$provinces = PSGC::getAllProvincesById('1');
+print_r($provinces);
+```
+
+### Get a Specific Address by ID
+
+```php
+use Jaydoesphp\PSGCphp\PSGC;
+
+$province = PSGC::getRegionById('1');
 print_r($province);
 ```
 
 ## File Structure
 
-- `src/` - Contains the core PHP classes and helpers.
-- `src/resources/json/` - Stores PSGC data in JSON format.
-- `tests/` - Unit tests for validation.
+- `src/` - Core PHP classes and helpers.
+- `src/resources/json/` - JSON datasets for each geographic level.
+- `tests/` - PHPUnit test cases.
 
 ## Running Tests
 
-To run unit tests, execute:
+To run unit tests:
 
 ```sh
 vendor/bin/phpunit
@@ -83,4 +105,4 @@ vendor/bin/phpunit
 
 ## License
 
-This project is licensed under the MIT License.
+This project is open-sourced under the MIT License.

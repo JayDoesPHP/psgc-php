@@ -13,13 +13,21 @@ final class BarangaysTest extends TestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testSearchBarangayByCode()
+    public function testGetAllBarangaysById()
     {
-        $barangayCode = '0102801001';
-        $result = PSGC::searchBarangayByCode($barangayCode);
-
+        $city_municipality_id = '1';
+        $result = PSGC::getAllBarangaysById($city_municipality_id);
+        
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
     }
 
+    public function testGetBarangayById()
+    {
+        $barangay_id = '1';
+        $result = PSGC::getBarangayById($barangay_id);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+    }
 }

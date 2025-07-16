@@ -13,10 +13,19 @@ final class ProvincesTest extends TestCase
         $this->assertNotEmpty($result);
     }
 
-    public function testSearchProvinceByCode()
+    public function testGetAllProvincesById()
     {
-        $provinceCode = '0102800000';
-        $result = PSGC::searchProvinceByCode($provinceCode);
+        $region_id = '1';
+        $result = PSGC::getAllProvincesById($region_id);
+
+        $this->assertIsArray($result);
+        $this->assertNotEmpty($result);
+    }
+
+    public function testGetProvinceById()
+    {
+        $province_id = '1';
+        $result = PSGC::getProvinceById($province_id);
 
         $this->assertIsArray($result);
         $this->assertNotEmpty($result);
