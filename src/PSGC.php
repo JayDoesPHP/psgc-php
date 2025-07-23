@@ -1,74 +1,88 @@
 <?php
 
-namespace Jaydoesphp\PSGCphp;
+namespace Arxjei;
 
-use Jaydoesphp\PSGCphp\helper\SearchAddressByCode;
-use Jaydoesphp\PSGCphp\helper\GetFileContentHelper;
-use Jaydoesphp\PSGCphp\enums\AddressType;
+use Arxjei\helper\SearchAddressByCode;
+use Arxjei\helper\GetFileContentHelper;
+use Arxjei\enums\AddressType;
 use Cake\Utility\Inflector;
 
 /**
  * PHP Standard Geographic Code (PSGC) PHP
  *
- * [Get All Regions]
- * @method static array getRegions() Get all regions
- * @method static array getProvinces() Get all provinces
- * @method static array getCities() Get all cities
- * @method static array getBarangays() Get all barangays
- * 
- * [Get All Address By Code]
- * @method static array getAllProvincesByRegionCode(string $region_code) Get All provinces by region_code
- * @method static array getAllCitiesByProvinceCode(string $province_code) Get All cities by province_code
- * @method static array getAllBarangaysByCityCode(string $city_code) Get All barangays by city_code
- *
- * [Get Address By Code]
- * @method static array getRegionsByCode(string $region_code) Get region by its code
- * @method static array getProvincesByCode(string $province_code) Get province by its code
- * @method static array getCitiesByCode(string $city_code) Get city by its code
- * @method static array getBarangaysByCode(string $barangay_code) Get barangay by its code
+ * Dynamic PSGC API
+ * @method static array getRegions()
+ * @method static array getProvinces()
+ * @method static array getCities()
+ * @method static array getBarangays()
+ * @method static array getAllProvincesByRegionCode(string $region_code)
+ * @method static array getAllCitiesByProvinceCode(string $province_code)
+ * @method static array getAllBarangaysByCityCode(string $city_code)
+ * @method static array getRegionsByCode(string $region_code)
+ * @method static array getProvincesByCode(string $province_code)
+ * @method static array getCitiesByCode(string $city_code)
+ * @method static array getBarangaysByCode(string $barangay_code)
  */
-
 final class PSGC
 {
-    /**
-     * Handle dynamic static method calls for getRegions, getCities, getBarangays, etc.
-     *
-     * @param string $name
-     * @param array $arguments
-     * @return array|null
-     */
     public static function __callStatic(string $name, array $arguments)
     {
-        // Check if the method name matches the pattern for getting all addresses
-        if (str_starts_with($name, 'get') && str_ends_with($name, 's')) {
+        return self::handleGetAllSimple($name)
+            ?? self::handleGetAllByCode($name, $arguments)
+            ?? self::handleGetSingleByCode($name, $arguments)
+            ?? throw new \BadMethodCallException("Method {$name} does not exist or is not accessible.");
+    }
 
-            $type = Inflector::dasherize(str_replace(['get'], '', $name));
-
-            return GetFileContentHelper::content("{$type}.json") ?? [];
+    /**
+     * Handles methods like: getRegions(), getCities()
+     */
+    private static function handleGetAllSimple(string $name): ?array
+    {
+        if (!str_starts_with($name, 'get') || !str_ends_with($name, 's')) {
+            return null;
         }
 
-        // Check if the method name matches the pattern for getting all addresses by Code
-        if (str_starts_with($name, 'getAll') && str_ends_with($name, 'Code')) {
+        $type = self::toDashed(str_replace('get', '', $name));
+        return GetFileContentHelper::content("{$type}.json");
+    }
 
-            $type = Inflector::dasherize(str_replace(['getAll', 'By', 'Code'], '', $name));
-
-            $type = array_map(fn($word) => Inflector::pluralize($word), explode('-', $type));
-
-            $addresses = GetFileContentHelper::content("{$type[0]}.json");
-
-            return SearchAddressByCode::search($addresses, $arguments[0], AddressType::from($type[1])) ?? null;
+    /**
+     * Handles methods like: getAllProvincesByRegionCode()
+     */
+    private static function handleGetAllByCode(string $name, array $args): ?array
+    {
+        if (!str_starts_with($name, 'getAll') || !str_ends_with($name, 'Code')) {
+            return null;
         }
 
-        // Check if the method name matches the pattern for getting address by Code
-        if (str_starts_with($name, 'get') && str_ends_with($name, 'ByCode')) {
+        $core = str_replace(['getAll', 'By', 'Code'], '', $name);
+        $types = array_map(fn($word) => Inflector::pluralize($word), explode('-', self::toDashed($core)));
 
-            $type = Inflector::dasherize(str_replace(['get', 'ByCode'], '', $name));
+        $addresses = GetFileContentHelper::content("{$types[0]}.json");
 
-            $addresses = GetFileContentHelper::content("{$type}.json");
+        return SearchAddressByCode::search($addresses, $args[0], AddressType::from($types[1]));
+    }
 
-            return SearchAddressByCode::search($addresses, $arguments[0], AddressType::from($type))[0] ?? null;
+    /**
+     * Handles methods like: getProvincesByCode()
+     */
+    private static function handleGetSingleByCode(string $name, array $args): ?array
+    {
+        if (!str_starts_with($name, 'get') || !str_ends_with($name, 'ByCode')) {
+            return null;
         }
 
-        return throw new \BadMethodCallException("Method {$name} does not exist.");
+        $type = self::toDashed(str_replace(['get', 'ByCode'], '', $name));
+        $addresses = GetFileContentHelper::content("{$type}.json");
+
+        return SearchAddressByCode::search($addresses, $args[0], AddressType::from($type))[0] ?? null;
+    }
+
+    /**
+     * Converts "ProvincesByRegion" => "provinces-by-region"
+     */
+    private static function toDashed(string $value): string
+    {
+        return Inflector::dasherize($value);
     }
 }

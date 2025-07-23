@@ -1,6 +1,6 @@
 <?php
 
-namespace Jaydoesphp\PSGCphp\enums;
+namespace Arxjei\enums;
 
 enum AddressType: string
 {

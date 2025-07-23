@@ -1,6 +1,6 @@
 <?php
 
-namespace Jaydoesphp\PSGCphp\helper;
+namespace Arxjei\helper;
 
 /**
  * Get file content helper
@@ -23,5 +23,4 @@ class GetFileContentHelper
 
         return json_decode(file_get_contents($path), true);
     }
-
 }

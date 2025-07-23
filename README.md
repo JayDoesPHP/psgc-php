@@ -15,7 +15,7 @@ files.
 ## Installation
 
 ```sh
-composer require jaydoesphp/psgc-php
+composer require arxjei/psgc-php
 ```
 
 ## Get All Methods
@@ -49,7 +49,7 @@ composer require jaydoesphp/psgc-php
 ### Get All Provinces
 
 ```php
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 
 $provinces = PSGC::getProvinces();
 print_r($provinces);
@@ -58,7 +58,7 @@ print_r($provinces);
 ### Get All Cities by Province Code
 
 ```php
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 
 $cities = PSGC::getAllCitiesByProvinceCode('0128');
 print_r($cities);
@@ -67,7 +67,7 @@ print_r($cities);
 ### Get a Specific Barangay by Code
 
 ```php
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 
 $barangay = PSGC::getBarangaysByCode('012801001');
 print_r($barangay);

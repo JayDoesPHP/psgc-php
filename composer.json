@@ -1,16 +1,16 @@
 {
-	"name": "jaydoesphp/psgc-php",
+	"name": "arxjei/psgc-php",
 	"description": "A PHP package for retrieving and managing Philippine Standard Geographic Code (PSGC) data, including regions, provinces, cities, and barangays.",
 	"type": "library",
 	"autoload": {
 		"psr-4": {
-			"Jaydoesphp\\PSGCphp\\": "src/"
+			"Arxjei\\": "src/"
 		}
 	},
 	"authors": [
 		{
 			"name": "Ar Jay Marigondon",
-			"email": "amarigondon@forbescollege.org"
+			"email": "contact@arjaymarigondon.dev"
 		}
 	],
 	"require": {

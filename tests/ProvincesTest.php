@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Jaydoesphp\PSGCphp\PSGC;
+use Arxjei\PSGC;
 
 final class ProvincesTest extends TestCase
 {

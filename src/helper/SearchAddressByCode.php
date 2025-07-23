@@ -1,8 +1,8 @@
 <?php
 
-namespace Jaydoesphp\PSGCphp\helper;
+namespace Arxjei\helper;
 
-use Jaydoesphp\PSGCphp\enums\AddressType;
+use Arxjei\enums\AddressType;
 
 class SearchAddressByCode
 {
